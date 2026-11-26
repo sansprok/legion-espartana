@@ -266,8 +266,47 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 .lang{order:4;margin-left:18px;display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;flex-shrink:0}
 .lang button{background:transparent;border:0;color:var(--muted);font:700 13px Inter,sans-serif;padding:8px 10px;cursor:pointer}
 .lang button.on{background:var(--grad);color:#1a1206}
+/* guia gratis */
+.guia{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+.guia-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:center}
+.guia-cover{width:min(290px,78%);margin:auto;aspect-ratio:148/210;border-radius:14px;background:radial-gradient(260px 200px at 80% 5%,rgba(158,27,31,.5),transparent 70%),#0d0c0b;border:1px solid rgba(201,162,78,.45);box-shadow:0 30px 60px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:22px;transform:rotate(-3deg)}
+.guia-cover img{width:72%}
+.guia-cover b{font-family:Oswald,Impact,sans-serif;font-size:34px;line-height:1;text-transform:uppercase}
+.guia-cover small{color:var(--gold2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.guia-list{list-style:none;margin:18px 0 0}
+.guia-list li{padding:6px 0 6px 28px;position:relative;color:#d6d2ca}
+.guia-list li:before{content:"✔";position:absolute;left:0;color:var(--gold)}
+.guia-form{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.guia-form input{flex:1;min-width:200px}
+.guia-note{display:block;color:var(--muted);font-size:13px;margin-top:10px}
+@media (max-width:980px){.guia-grid{grid-template-columns:1fr}}
+/* cronometro + guia */
+.seg.days button{min-width:62px;flex:1 1 21%;padding:10px 6px;font-size:14px}
+.seg.days button:first-child{flex-basis:100%}
+.guide-link{display:inline-block;margin-top:10px;color:var(--gold2);font-size:14px;font-weight:600}
+.guide-info{margin-top:18px;padding:14px 16px;border:1px dashed var(--gold);border-radius:12px}
+.guide-info b{display:block;font-family:Oswald,Impact,sans-serif;font-size:20px;text-transform:uppercase}
+.guide-info span{color:var(--muted);font-size:14px}
+.exname{font-size:21px;line-height:1.1;max-width:76%}
+.goal{color:var(--gold2);font-size:15px;font-weight:600;margin-top:4px;min-height:20px;max-width:80%}
+/* mascota */
+.mascot{position:absolute;top:14px;right:16px;display:flex;align-items:flex-start;gap:8px;z-index:5;max-width:200px}
+.mascot-fig{width:54px;height:54px;flex:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));cursor:pointer;transition:width .2s,height .2s}
+.mascot-bubble{background:#1c1a17;border:1px solid var(--line);color:var(--txt);font:600 13px/1.3 Inter,sans-serif;padding:8px 12px;border-radius:12px 12px 2px 12px;box-shadow:0 8px 20px rgba(0,0,0,.35);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;max-width:150px}
+.mascot-bubble.on{opacity:1;transform:translateY(0)}
+.mascot-min{position:absolute;top:-8px;right:-8px;width:20px;height:20px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);color:var(--muted);font-size:13px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mascot.min .mascot-bubble{display:none}
+.mascot.min .mascot-fig{width:32px;height:32px;opacity:.85}
+@keyframes mascotCheer{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-8deg)}}
+.mascot.cheer .mascot-fig{animation:mascotCheer .5s ease-in-out 2}
+@keyframes mascotCelebrate{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(1.18) rotate(8deg)}75%{transform:scale(1.18) rotate(-8deg)}}
+.mascot.celebrate .mascot-fig{animation:mascotCelebrate .6s ease-in-out 2}
+.mSparkle{opacity:0;transform-origin:center}
+.mascot.celebrate .mSparkle{opacity:1;animation:mascotCheer .5s ease-in-out 2}
+@media (prefers-reduced-motion:reduce){.mascot.cheer .mascot-fig,.mascot.celebrate .mascot-fig,.mascot.celebrate .mSparkle{animation:none}}
+@media (max-width:760px){.mascot{position:static;max-width:none;margin:0 0 14px}}
 /* responsive */
-@media (max-width:1240px){
+@media (max-width:1420px){
   .lang{margin-left:auto;margin-right:12px}
   .links{position:fixed;top:72px;left:0;right:0;background:rgba(11,11,14,.97);flex-direction:column;padding:24px;gap:18px;border-bottom:1px solid var(--line);transform:translateY(-130%);visibility:hidden;transition:transform .3s,visibility .3s}
   .links.open{transform:none;visibility:visible}
@@ -308,6 +347,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
     <div class="lang" id="lang"><button data-lang="es" class="on">ES</button><button data-lang="en">EN</button></div>
     <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
     <div class="links" id="links">
+      <a href="#guia">Guía gratis</a>
       <a href="#edades">Plan por edad</a>
       <a href="#jovenes">Jóvenes</a>
       <a href="#metodo">Método</a>
@@ -359,6 +399,34 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
     <a href="#edades" class="btn" style="background:#1a1206;color:#f3c46b;padding:12px 22px;font-size:16px">Reservar mi lugar</a>
   </div>
 </div>
+
+<!-- GUIA GRATIS -->
+<section id="guia" class="guia">
+  <div class="container guia-grid">
+    <div class="guia-cover rv">
+      <small>Guía gratuita</small>
+      <img class="guia-logo" src="" alt="Logo Un espartano jamás se rinde">
+      <b>Primeros<br><span class="grad">7 días</span></b>
+      <small>Nunca es tarde para empezar</small>
+    </div>
+    <div class="rv">
+      <span class="eyebrow">🎁 Gratis · PDF de 14 páginas</span>
+      <h2>Tus primeros <span class="grad">7 días</span></h2>
+      <p class="lead" style="margin-top:14px">Un plan simple para volver a moverte en casa, con una silla y una pared. Ideal si nunca entrenaste o si llevas años sin hacerlo.</p>
+      <ul class="guia-list">
+        <li>6 ejercicios ilustrados, cada uno con versión fácil</li>
+        <li>Plan día por día para marcar tu avance</li>
+        <li>La prueba del espartano para medir tu progreso</li>
+        <li>5 reglas simples de alimentación</li>
+      </ul>
+      <form class="guia-form" id="guiaForm">
+        <input id="gName" required placeholder="Tu nombre">
+        <button class="btn btn-main" type="submit">Descargar gratis</button>
+      </form>
+      <small class="guia-note">Se descarga al instante y se abre WhatsApp para avisarle a Carlos que empezaste.</small>
+    </div>
+  </div>
+</section>
 
 <!-- PERFILES ESPARTANOS -->
 <section id="perfiles">
@@ -486,21 +554,40 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
     <div class="center">
       <span class="eyebrow">Pruébalo ahora · Gratis</span>
       <h2>Entrena con <span class="grad">cronómetro</span></h2>
-      <p class="lead">Elige tu nivel y tu tiempo. El cronómetro te guía ejercicio por ejercicio, igual que en el live de las 5 a. m.</p>
+      <p class="lead">Elige el día de tu guía gratis, o tu nivel y tu tiempo. El cronómetro te guía ejercicio por ejercicio, igual que en el live de las 5 a. m.</p>
     </div>
     <div class="timer-grid">
       <div class="panel rv">
-        <b style="font-size:18px">1. Tu nivel</b>
+        <b style="font-size:18px">0. ¿Sigues la guía gratis de 7 días?</b>
+        <div class="seg days" id="tGuide"><button class="on" data-v="0">Rutina libre</button><button data-v="1">Día 1</button><button data-v="2">Día 2</button><button data-v="3">Día 3</button><button data-v="4">Día 4</button><button data-v="5">Día 5</button><button data-v="6">Día 6</button><button data-v="7">Día 7</button></div>
+        <a href="#guia" class="guide-link">¿Aún no tienes la guía? Descárgala gratis →</a>
+        <div class="guide-info" id="tGuideInfo" hidden><b id="tGTitle"></b><span id="tGMeta"></span></div>
+        <div id="tFree">
+        <b style="font-size:18px;display:block;margin-top:22px">1. Tu nivel</b>
         <div class="seg" id="tLevel"><button class="on" data-v="0">🌱 Recluta</button><button data-v="1">🔥 Guerrero</button><button data-v="2">🛡️ Espartano</button></div>
         <b style="font-size:18px;display:block;margin-top:22px">2. ¿Cuánto tiempo tienes?</b>
         <div class="seg" id="tDur"><button class="on" data-v="15">15 min</button><button data-v="30">30 min</button><button data-v="60">1 hora</button></div>
+        </div>
         <div class="queue" id="tQueue"></div>
         <label class="demo"><input type="checkbox" id="tFast"> Modo demostración (10 veces más rápido)</label>
       </div>
-      <div class="panel rv">
+      <div class="panel rv" style="position:relative">
+        <div class="mascot" id="mascot" aria-live="polite">
+          <svg class="mascot-fig" id="mascotFig" viewBox="0 0 64 64" aria-hidden="true">
+            <defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d28e"/><stop offset="1" stop-color="#9c7434"/></linearGradient></defs>
+            <path d="M32 4c-6 6-16 8-16 8v14c0 14 8 22 16 26 8-4 16-12 16-26V12s-10-2-16-8Z" fill="url(#mg)" stroke="#6b5226" stroke-width="2"/>
+            <path d="M32 2c6-4 16-2 18 4-6 2-12 0-18-4Z" fill="#9e1b1f"/>
+            <circle cx="25" cy="26" r="2.6" fill="#241c0f"/><circle cx="39" cy="26" r="2.6" fill="#241c0f"/>
+            <path d="M25 34q7 6 14 0" fill="none" stroke="#241c0f" stroke-width="2.4" stroke-linecap="round"/>
+            <path class="mSparkle" d="M14 16l1.4 3.6L19 21l-3.6 1.4L14 26l-1.4-3.6L9 21l3.6-1.4Z" fill="#e8c77d"/>
+            <path class="mSparkle" d="M50 12l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2Z" fill="#e8c77d"/>
+          </svg>
+          <div class="mascot-bubble" id="mascotBubble"></div>
+          <button class="mascot-min" id="mascotMin" aria-label="Minimizar mascota" title="Minimizar">–</button>
+        </div>
         <div class="ring-wrap">
           <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#2a2621" stroke-width="8"/><circle id="tRing" cx="60" cy="60" r="52" fill="none" stroke="url(#tg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="0"/><defs><linearGradient id="tg"><stop offset="0" stop-color="#f0d28e"/><stop offset="1" stop-color="#9c7434"/></linearGradient></defs></svg>
-          <div class="ring-in"><div class="phase work" id="tPhase">Listo</div><div class="clock" id="tClock">00:30</div><div class="exname" id="tEx">Flexiones</div></div>
+          <div class="ring-in"><div class="phase work" id="tPhase">Listo</div><div class="clock" id="tClock">00:30</div><div class="exname" id="tEx">Flexiones</div><div class="goal" id="tGoal"></div></div>
         </div>
         <div class="meta"><span id="tRound">Ronda 1 de 3</span><span id="tNext">Sigue: Sentadillas</span></div>
         <div class="ctrls"><button class="btn btn-main" id="tStart">▶ Iniciar</button><button class="btn btn-ghost" id="tSkip">⏭</button><button class="btn btn-ghost" id="tReset">↺</button></div>
@@ -628,7 +715,7 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
       <h3 id="mTitle">Reserva tu plan</h3>
       <form id="leadForm">
         <label>Tu nombre</label><input required placeholder="Ej. Juan Pérez" id="fName">
-        <label>Plan</label>
+                <label>Plan</label>
         <select id="fPlan">
           <option value="Pack Espartano completo">Pack Espartano completo</option>
           <option value="Plan Espartano 30 días">Plan Espartano 30 días</option>
@@ -667,7 +754,7 @@ const RULES=[
  [/^(\S+) (.+)$/u,m=>EN[m[2]]!==undefined&&!/[A-Za-z]/.test(m[1])?m[1]+' '+EN[m[2]]:null]
 ];
 function tr(s){if(LANG==='es'||s==null)return s;if(EN[s]!==undefined)return EN[s];for(const [re,fn] of RULES){const m=s.match(re);if(m){const r=fn(m);if(r!=null)return r}}return s}
-const DYN='#aTag,#aTitle,#aFocus,#aTips,#aPlanName,#aEx,#yTitle,#yFocus,#yChalL,#yPlanName,#yEx,#tQueue,#tPhase,#tClock,#tEx,#tRound,#tNext,#tStart,#exlist,#weeks,#progtxt,#mTitle,#okName,#toast,[data-count],script,style';
+const DYN='#aTag,#aTitle,#aFocus,#aTips,#aPlanName,#aEx,#yTitle,#yFocus,#yChalL,#yPlanName,#yEx,#tQueue,#tGoal,#tGTitle,#tGMeta,#tPhase,#tClock,#tEx,#tRound,#tNext,#tStart,#exlist,#weeks,#progtxt,#mTitle,#okName,#toast,#mascotBubble,[data-count],script,style';
 const ORIG=new WeakMap();
 function applyStatic(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
   while(n=w.nextNode()){if(n.parentElement.closest(DYN))continue;if(!ORIG.has(n))ORIG.set(n,n.nodeValue);const o=ORIG.get(n),tt=o.trim();if(!tt)continue;const out=LANG==='es'?o:o.replace(tt,tr(tt));if(n.nodeValue!==out)n.nodeValue=out}
@@ -739,28 +826,69 @@ const EX=['💪 Flexiones','🦵 Sentadillas','🧱 Plancha','🚶 Marcha en el 
 const LV=[{w:30,r:30},{w:40,r:20},{w:45,r:15}];
 let tl=0,td=15,steps=[],si=0,left=0,running=false,iv=null;
 const $=id=>document.getElementById(id), C=326.7;
-function build(){const {w,r}=LV[tl],rounds=Math.max(1,Math.round(td*60/(EX.length*(w+r))));steps=[];
+// guia 7 dias: [nombre, segundos, meta en pantalla, como aparece en el PDF]
+let gd=0;
+const GD=[null,
+ {t:'Conoce los movimientos',m:'15 min',warm:[['🚶 Marcha en el sitio',60,'1 min']],r:2,c:[['🦵 Sentadilla a la silla',45,'8 repeticiones lentas','2 × 8'],['🧱 Flexión en la pared',45,'8 repeticiones lentas','2 × 8'],['🦶 Elevación de talones',45,'10 repeticiones lentas','2 × 10']],end:[['🚶 Caminata',600,'10 min']]},
+ {t:'Caminar y soltar el cuerpo',m:'20 min',warm:[],r:0,c:[],end:[['🚶 Caminata a ritmo cómodo',900,'15 min'],['🔄 Círculos de hombros y cadera',300,'5 min']]},
+ {t:'Primera rutina completa',m:'20 min',warm:[['🚶 Marcha en el sitio',60,'1 min']],r:2,c:[['🦵 Sentadilla a la silla',45,'10 repeticiones lentas','2 × 10'],['🧱 Flexión en la pared',45,'10 repeticiones lentas','2 × 10'],['🍑 Puente de glúteo',45,'10 repeticiones lentas','2 × 10'],['🦶 Elevación de talones',45,'12 repeticiones lentas','2 × 12'],['⚖️ Equilibrio con apoyo',30,'15 s por lado','2 × 15 s c/lado']],end:[]},
+ {t:'Descanso activo',m:'15 a 20 min',warm:[],r:0,c:[],end:[['🚶 Caminata suave',900,'15 a 20 min']]},
+ {t:'Subimos un poco',m:'20 min',warm:[['🚶 Marcha en el sitio',60,'1 min']],r:3,c:[['🦵 Sentadilla a la silla',45,'10 repeticiones lentas','3 × 10'],['🧱 Flexión en la pared',45,'10 repeticiones lentas','3 × 10'],['🍑 Puente de glúteo',50,'12 repeticiones lentas','3 × 12'],['🚶 Marcha en el sitio',40,'40 s','3 × 40 s']],end:[]},
+ {t:'Caminar y equilibrio',m:'25 min',warm:[['🚶 Caminata',1200,'20 min']],r:3,c:[['⚖️ Equilibrio con apoyo',40,'20 s por lado','3 × 20 s c/lado']],end:[]},
+ {t:'La prueba del espartano',m:'10 min',warm:[['🚶 Marcha en el sitio',60,'Calienta 1 min','1 min']],r:0,c:[],end:[['🦵 Sentadillas a la silla en 30 s',30,'Cuenta tus repeticiones','anota'],['Descanso',60,'Anota el número','rest'],['🧱 Flexiones en la pared en 30 s',30,'Cuenta tus repeticiones','anota'],['Descanso',60,'Anota el número','rest'],['⚖️ Equilibrio sin apoyo',60,'Aguanta lo más que puedas, con la silla cerca','anota']]}
+];
+function buildGuide(){const D=GD[gd];steps=[];
+  D.warm.forEach(([n,t,g])=>steps.push({n,t,ph:'work',g}));
+  for(let k=0;k<D.r;k++)D.c.forEach(([n,t,g],i)=>{steps.push({n,t,ph:'work',g,k});const last=i===D.c.length-1;if(!(k===D.r-1&&last))steps.push({n:last?'Descanso entre rondas':'Descanso',t:last?60:20,ph:'rest',k})});
+  if(D.r&&D.end.length)steps.push({n:'Descanso',t:30,ph:'rest'});
+  D.end.forEach(([n,t,g,ph])=>steps.push({n,t,ph:ph||'work',g}));
+  steps.rounds=D.r||1;si=0;left=steps[0].t;stop();queue();draw()}
+function guideInfo(){if(!gd)return;$('tGTitle').textContent=tr('Día '+gd)+' · '+tr(GD[gd].t);$('tGMeta').textContent=tr(GD[gd].m)+' · '+tr('Igual que en tu guía en PDF')}
+function build(){if(gd)return buildGuide();const {w,r}=LV[tl],rounds=Math.max(1,Math.round(td*60/(EX.length*(w+r))));steps=[];
   for(let k=0;k<rounds;k++)EX.forEach((n,i)=>{steps.push({n,t:w,ph:'work',k});if(!(k===rounds-1&&i===EX.length-1))steps.push({n:'Descanso',t:r,ph:'rest',k})});
   steps.rounds=rounds;si=0;left=steps[0].t;stop();queue();draw()}
-function queue(){const {w,r}=LV[tl];$('tQueue').innerHTML=EX.map(n=>`<div data-n="${n}"><span>${tr(n)}</span><b>${w} s</b></div>`).join('')+`<div><span>${tr('⏸ Descanso entre ejercicios')}</span><b>${r} s</b></div><div><span>${tr('🔁 Rondas')}</span><b>${steps.rounds}</b></div>`}
+function queue(){if(gd){const D=GD[gd],row=([n,t,g,p])=>`<div data-n="${n}"><span>${tr(n)}</span><b>${tr(p||g)}</b></div>`;
+  $('tQueue').innerHTML=D.warm.map(row).join('')+D.c.map(row).join('')+D.end.filter(x=>x[3]!=='rest').map(row).join('')+(D.r?`<div><span>${tr('⏸ Descanso entre ejercicios')}</span><b>20 s</b></div><div><span>${tr('🔁 Rondas')}</span><b>${D.r}</b></div>`:'');return}
+  const {w,r}=LV[tl];$('tQueue').innerHTML=EX.map(n=>`<div data-n="${n}"><span>${tr(n)}</span><b>${w} s</b></div>`).join('')+`<div><span>${tr('⏸ Descanso entre ejercicios')}</span><b>${r} s</b></div><div><span>${tr('🔁 Rondas')}</span><b>${steps.rounds}</b></div>`}
 const fmt2=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
 function draw(){const s=steps[si];if(!s)return;
-  $('tClock').textContent=fmt2(Math.ceil(left));$('tEx').textContent=tr(s.n);
+  $('tClock').textContent=fmt2(Math.ceil(left));$('tEx').textContent=tr(s.n);$('tGoal').textContent=s.g?tr(s.g):'';
   const ph=$('tPhase');ph.className='phase '+s.ph;ph.textContent=tr(running?(s.ph==='work'?'¡Entrena!':'Descansa'):(si===0&&left===s.t?'Listo':'En pausa'));
-  $('tRound').textContent=tr(`Ronda ${s.k+1} de ${steps.rounds}`);
+  $('tRound').textContent=s.k==null?tr('Día '+gd):tr(`Ronda ${s.k+1} de ${steps.rounds}`);
   const nx=steps.slice(si+1).find(x=>x.ph==='work');$('tNext').textContent=tr(nx?'Sigue: '+nx.n.replace(/^\S+ /,''):'¡Último ejercicio!');
   $('tRing').style.strokeDashoffset=C*(1-left/s.t);
-  document.querySelectorAll('#tQueue [data-n]').forEach(d=>d.classList.toggle('now',s.ph==='work'&&d.dataset.n===s.n))}
+  document.querySelectorAll('#tQueue [data-n]').forEach(d=>d.classList.toggle('now',s.ph==='work'&&d.dataset.n===s.n));
+  mascotTick(s)}
 function beep(f){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.2,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.35);o.start();o.stop(a.currentTime+.35)}catch(e){};if(navigator.vibrate)navigator.vibrate(200)}
-function next(){si++;if(si>=steps.length){stop();$('tPhase').className='phase done';$('tPhase').textContent=tr('¡Completado!');$('tClock').textContent='💪';$('tEx').textContent=tr('Un espartano jamás se rinde');$('tNext').textContent=tr('Rutina terminada');$('tRing').style.strokeDashoffset=0;beep(1040);showToast('🛡️ ¡Rutina completada! Así se entrena en la Legión.');return}
+function next(){si++;if(si>=steps.length){stop();$('tPhase').className='phase done';$('tPhase').textContent=tr('¡Completado!');$('tClock').textContent='💪';$('tEx').textContent=tr('Un espartano jamás se rinde');$('tNext').textContent=tr('Rutina terminada');$('tGoal').textContent='';$('tRing').style.strokeDashoffset=0;beep(1040);showToast(gd===7?'📝 Anota tus resultados en la página 12 de la guía.':gd?`✅ ¡Día ${gd} completado! Márcalo en tu guía.`:'🛡️ ¡Rutina completada! Así se entrena en la Legión.');sayMascot('🛡️ ¡Lo lograste, espartano!','celebrate');return}
   left=steps[si].t;beep(steps[si].ph==='work'?880:520);draw()}
 function tickT(){left-=($('tFast').checked?1:0.1);if(left<=0.001){next()}else draw()}
-function start(){if(si>=steps.length)build();running=true;$('tStart').textContent=tr('⏸ Pausar');iv=setInterval(tickT,100);if(si===0&&left===steps[0].t)beep(880);draw()}
+function start(){if(si>=steps.length)build();running=true;$('tStart').textContent=tr('⏸ Pausar');iv=setInterval(tickT,100);if(si===0&&left===steps[0].t){beep(880);sayMascot('¡Vamos a entrenar!','cheer')}draw()}
 function stop(){running=false;clearInterval(iv);$('tStart').textContent=tr('▶ Iniciar')}
 $('tStart').onclick=()=>running?(stop(),draw()):start();
 $('tSkip').onclick=()=>next();
 $('tReset').onclick=()=>build();
 [['tLevel',v=>tl=v],['tDur',v=>td=v]].forEach(([id,set])=>document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{set(+b.dataset.v);document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));build()}));
+document.querySelectorAll('#tGuide button').forEach(b=>b.onclick=()=>{gd=+b.dataset.v;document.querySelectorAll('#tGuide button').forEach(x=>x.classList.toggle('on',x===b));$('tFree').hidden=!!gd;$('tGuideInfo').hidden=!gd;guideInfo();build()});
+RULES.unshift([/^(\d+) repeticiones lentas$/,m=>`${m[1]} slow reps`],[/^(\d+) s por lado$/,m=>`${m[1]} s each side`],[/^Día (\d)$/,m=>`Day ${m[1]}`],[/^✅ ¡Día (\d) completado! Márcalo en tu guía\.$/,m=>`✅ Day ${m[1]} done! Tick it off in your guide.`]);
+Object.assign(EN,{"0. ¿Sigues la guía gratis de 7 días?":"0. Following the free 7-day guide?","Rutina libre":"Free workout","¿Aún no tienes la guía? Descárgala gratis →":"Don't have the guide yet? Download it free →","Flexión en la pared":"Wall push-ups","Caminata a ritmo cómodo":"Walk at a comfortable pace","Círculos de hombros y cadera":"Shoulder and hip circles","Caminata suave":"Easy walk","Sentadillas a la silla en 30 s":"Chair squats in 30 s","Flexiones en la pared en 30 s":"Wall push-ups in 30 s","Descanso entre rondas":"Rest between rounds","Calienta 1 min":"Warm up 1 min","Cuenta tus repeticiones":"Count your reps","Anota el número":"Write down the number","Aguanta lo más que puedas, con la silla cerca":"Hold as long as you can, chair nearby","Conoce los movimientos":"Learn the moves","Caminar y soltar el cuerpo":"Walk and loosen up","Primera rutina completa":"First full workout","Descanso activo":"Active rest","Subimos un poco":"Stepping it up","Caminar y equilibrio":"Walking and balance","La prueba del espartano":"The Spartan test","15 a 20 min":"15 to 20 min","Igual que en tu guía en PDF":"Same as your PDF guide","anota":"write it down","Elige el día de tu guía gratis, o tu nivel y tu tiempo. El cronómetro te guía ejercicio por ejercicio, igual que en el live de las 5 a. m.":"Pick the day of your free guide, or your level and time. The timer guides you exercise by exercise, just like the 5 a.m. live.","📝 Anota tus resultados en la página 12 de la guía.":"📝 Write your results on page 12 of the guide."});
+
+// ===== mascota del cronómetro =====
+const mascotEl=$('mascot'),mascotBubble=$('mascotBubble');
+let mascotMsg=null;
+function sayMascot(key,mood){mascotMsg=key;mascotBubble.textContent=tr(key);mascotBubble.classList.add('on');
+  if(mood){mascotEl.classList.remove('cheer','celebrate');void mascotEl.offsetWidth;mascotEl.classList.add(mood)}
+  clearTimeout(mascotBubble._t);mascotBubble._t=setTimeout(()=>mascotBubble.classList.remove('on'),3200)}
+const MASCOT_CHEER=['¡Ya casi, no bajes el ritmo!','¡Tú puedes, un poco más!','¡Aguanta, un espartano no afloja!'];
+function mascotTick(s){if(!running)return;
+  if(s.ph==='work'&&left<=5&&left>0.05){
+    if(!gd&&tl===2&&!s._ext){s.t+=10;left+=10;s._ext=true;sayMascot('🛡️ ¡Nivel Espartano! +10 segundos','cheer');return}
+    if(!s._warn){s._warn=true;sayMascot(MASCOT_CHEER[Math.floor(Math.random()*MASCOT_CHEER.length)],'cheer')}
+  }
+  if(s.ph==='rest'&&left<=3&&left>0.05&&!s._rest){s._rest=true;sayMascot('Respira, ya vuelves','cheer')}}
+$('mascotMin').onclick=()=>{mascotEl.classList.toggle('min');try{localStorage.setItem('legion-mascot-min',mascotEl.classList.contains('min')?'1':'0')}catch(e){}};
+try{if(localStorage.getItem('legion-mascot-min')==='1')mascotEl.classList.add('min')}catch(e){}
+Object.assign(EN,{"¡Vamos a entrenar!":"Let's train!","¡Ya casi, no bajes el ritmo!":"Almost there, keep the pace!","¡Tú puedes, un poco más!":"You can do it, a bit more!","¡Aguanta, un espartano no afloja!":"Hang in there, a Spartan never slacks!","Respira, ya vuelves":"Breathe, you're almost back","🛡️ ¡Nivel Espartano! +10 segundos":"🛡️ Spartan level! +10 seconds","🛡️ ¡Lo lograste, espartano!":"🛡️ You did it, Spartan!","Minimizar mascota":"Minimize mascot"});
 build();
 
 // ===== planes por edad =====
@@ -832,9 +960,20 @@ renderYoung();
 // perfiles → abre el plan de su edad
 document.querySelectorAll('[data-age]').forEach(a=>a.addEventListener('click',()=>{ag=+a.dataset.age;al=0;renderAge()}));
 
+// ===== guia gratis =====
+const GUIA_PDF='Guia-Primeros-7-dias-Legion-Espartana.pdf'; // <-- ENLACE DE LA GUIA (archivo en la misma carpeta)
+document.querySelector('.guia-logo').src=document.querySelector('.logo-hero').src;
+Object.assign(EN,{"Guía gratis":"Free guide","Guía gratuita":"Free guide","Primeros":"First","7 días":"7 days","🎁 Gratis · PDF de 14 páginas":"🎁 Free · 14-page PDF","Tus primeros":"Your first","Un plan simple para volver a moverte en casa, con una silla y una pared. Ideal si nunca entrenaste o si llevas años sin hacerlo.":"A simple plan to start moving again at home, with a chair and a wall. Ideal if you never trained or haven't in years.","6 ejercicios ilustrados, cada uno con versión fácil":"6 illustrated exercises, each with an easier version","Plan día por día para marcar tu avance":"A day-by-day plan to tick off","La prueba del espartano para medir tu progreso":"The Spartan test to measure your progress","5 reglas simples de alimentación":"5 simple nutrition rules","Descargar gratis":"Download free","Se descarga al instante y se abre WhatsApp para avisarle a Carlos que empezaste.":"It downloads instantly (in Spanish) and opens WhatsApp so you can tell Carlos you've started."});
+document.getElementById('guiaForm').onsubmit=e=>{e.preventDefault();
+  const n=document.getElementById('gName').value.trim();
+  openWA(LANG==='en'?`Hi Carlos, I'm ${n}. I downloaded the free 7-day guide and I'm starting today 💪`:`Hola don Carlos, soy ${n}. Descargué la guía gratis de 7 días y empiezo hoy 💪`);
+  const a=document.createElement('a');a.href=GUIA_PDF;a.download='';document.body.appendChild(a);a.click();a.remove();
+  e.target.reset()};
+
 function setLang(l){LANG=l;document.documentElement.lang=l;
   document.title=l==='en'?"Legión Espartana · It's never too late to start":'Legión Espartana · Nunca es tarde para empezar';
-  applyStatic();renderAge();renderYoung();render();queue();draw();
+  applyStatic();renderAge();renderYoung();render();queue();draw();guideInfo();
+  if(mascotMsg)mascotBubble.textContent=tr(mascotMsg);
   $('tStart').textContent=tr(running?'⏸ Pausar':'▶ Iniciar');
   document.querySelectorAll('[data-count]').forEach(el=>{if(!/^0$/.test(el.textContent))el.textContent=fmt(+el.dataset.count)+(el.dataset.suffix||'')});
   document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
@@ -844,4 +983,4 @@ let saved='es';try{saved=localStorage.getItem('legion-lang')||'es'}catch(e){}
 if(saved==='en')setLang('en');
 </script>
 </body>
-</html> 
+</html>
