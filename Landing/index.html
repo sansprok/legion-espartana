@@ -70,6 +70,14 @@ nav.scrolled{background:rgba(11,11,14,.92);backdrop-filter:blur(10px);border-bot
 .links a:not(.btn):hover{color:var(--gold2)}
 .links .btn{padding:10px 18px;font-size:15px}
 .burger{order:5;display:none;background:none;border:0;color:var(--txt);font-size:28px;cursor:pointer}
+.dropdown{position:relative;display:flex;align-items:center}
+.drop-toggle{display:flex;align-items:center;gap:4px}
+.dropdown .caret{font-size:11px;transition:transform .2s}
+.dropdown.open .caret{transform:rotate(180deg)}
+.drop-menu{position:absolute;top:100%;left:0;margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;display:none;flex-direction:column;min-width:170px;box-shadow:0 12px 30px rgba(0,0,0,.45);z-index:10}
+.drop-menu a{padding:10px 12px;border-radius:8px;white-space:nowrap;font-size:15px}
+.drop-menu a:hover{background:rgba(201,162,78,.12)}
+.dropdown.open .drop-menu{display:flex}
 
 /* hero */
 .hero{min-height:100vh;display:flex;align-items:center;padding-top:110px;background:
@@ -308,9 +316,11 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 /* responsive */
 @media (max-width:1420px){
   .lang{margin-left:auto;margin-right:12px}
-  .links{position:fixed;top:72px;left:0;right:0;background:rgba(11,11,14,.97);flex-direction:column;padding:24px;gap:18px;border-bottom:1px solid var(--line);transform:translateY(-130%);visibility:hidden;transition:transform .3s,visibility .3s}
+  .links{position:fixed;top:72px;left:0;right:0;background:rgba(11,11,14,.97);flex-direction:column;align-items:stretch;padding:24px;gap:18px;border-bottom:1px solid var(--line);transform:translateY(-130%);visibility:hidden;transition:transform .3s,visibility .3s;max-height:calc(100vh - 72px);overflow-y:auto}
   .links.open{transform:none;visibility:visible}
   .burger{display:block}
+  .dropdown{flex-direction:column;align-items:flex-start}
+  .drop-menu{position:static;margin-top:10px;box-shadow:none;border:0;background:rgba(255,255,255,.04);padding:6px 0 6px 14px;width:100%}
 }
 @media (max-width:980px){
   .timer-grid{grid-template-columns:1fr}.timer-grid>.panel:last-child{order:-1}
@@ -347,15 +357,30 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
     <div class="lang" id="lang"><button data-lang="es" class="on">ES</button><button data-lang="en">EN</button></div>
     <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
     <div class="links" id="links">
-      <a href="#guia">Guía gratis</a>
-      <a href="#edades">Plan por edad</a>
-      <a href="#jovenes">Jóvenes</a>
-      <a href="#metodo">Método</a>
-      <a href="#planes">Planes</a>
-      <a href="#entrena">Entrena ya</a>
-      <a href="#reto">Reto 30 días</a>
-      <a href="#app">App</a>
-      <a href="#faq">Preguntas</a>
+      <div class="dropdown">
+        <a href="#" class="drop-toggle">Servicios <span class="caret">▾</span></a>
+        <div class="drop-menu">
+          <a href="#edades">Plan por edad</a>
+          <a href="#jovenes">Jóvenes</a>
+          <a href="#planes">Planes</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="drop-toggle">Retos <span class="caret">▾</span></a>
+        <div class="drop-menu">
+          <a href="#guia">Guía gratis</a>
+          <a href="#entrena">Entrena ya</a>
+          <a href="#reto">Reto 30 días</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="drop-toggle">Más <span class="caret">▾</span></a>
+        <div class="drop-menu">
+          <a href="#metodo">Método</a>
+          <a href="#app">App</a>
+          <a href="#faq">Preguntas</a>
+        </div>
+      </div>
       <a href="#" class="btn btn-main" data-wa="Hola don Carlos, quiero unirme a la Legión Espartana">Únete</a>
     </div>
   </div>
@@ -764,7 +789,9 @@ document.querySelector('.brand img').src=document.querySelector('.logo-hero').sr
 const nav=document.getElementById('nav'),links=document.getElementById('links');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
 document.getElementById('burger').onclick=()=>links.classList.toggle('open');
-links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+links.querySelectorAll('a:not(.drop-toggle)').forEach(a=>a.onclick=()=>{links.classList.remove('open');document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'))});
+document.querySelectorAll('.drop-toggle').forEach(t=>t.onclick=e=>{e.preventDefault();const d=t.closest('.dropdown');document.querySelectorAll('.dropdown').forEach(o=>{if(o!==d)o.classList.remove('open')});d.classList.toggle('open')});
+document.addEventListener('click',e=>{if(!e.target.closest('.dropdown'))document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'))});
 document.getElementById('yr').textContent=new Date().getFullYear();
 
 // reveal + counters
@@ -807,8 +834,9 @@ function openModal(plan){if(plan){fPlan.value=plan;document.getElementById('mTit
 document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>openModal(b.dataset.plan));
 document.getElementById('close').onclick=document.getElementById('okBtn').onclick=()=>modal.classList.remove('on');
 modal.onclick=e=>{if(e.target===modal)modal.classList.remove('on')};
-const WA='56951810712';
-const openWA=t=>window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(t),'_blank');
+const WA=''; // pendiente: reemplazar por el enlace de Hotmart del primer producto
+const openWA=t=>showToast(tr('🛡️ Muy pronto podrás inscribirte aquí directamente. ¡Gracias por tu interés!'));
+Object.assign(EN,{"🛡️ Muy pronto podrás inscribirte aquí directamente. ¡Gracias por tu interés!":"🛡️ You'll soon be able to sign up here directly. Thanks for your interest!","Servicios":"Services","Retos":"Challenges","Más":"More"});
 document.querySelectorAll('[data-wa]').forEach(a=>a.onclick=e=>{e.preventDefault();openWA(tr(a.dataset.wa))});
 document.getElementById('leadForm').onsubmit=e=>{e.preventDefault();
   const name=document.getElementById('fName').value.trim();

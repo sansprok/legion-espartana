@@ -9,3 +9,6 @@ Thumbs.db
 
 # Archivos personales ajenos al proyecto
 Análisis de espacio del disco C.xlsx
+
+# Carpeta armada para arrastrar a Netlify Drop (se regenera, no es fuente)
+Landing/_publish/
