@@ -1,0 +1,16 @@
+.fondo {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 1rem; box-sizing: border-box;
+  background: radial-gradient(600px 400px at 85% 0%, rgba(158, 27, 31, 0.35), transparent 60%), #0d0c0b;
+}
+.tarjeta { width: 100%; max-width: 24rem; margin: 0; }
+.instalar { margin-top: 1rem; }
+.marca {
+  display: flex; flex-direction: column; text-align: center; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;
+  img { height: auto; }
+  h1 { font-size: 1.25rem; margin: 0; font-weight: 700; }
+  p { margin: 0.125rem 0 0; color: #8f9bb3; font-size: 0.875rem; }
+}
+.alerta { margin-bottom: 1rem; }
+.ver { margin-top: 0.5rem; }
+.pie { margin: 1.25rem 0 0; font-size: 0.8125rem; color: #8f9bb3; text-align: center; }

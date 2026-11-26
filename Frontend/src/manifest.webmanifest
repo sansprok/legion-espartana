@@ -1,0 +1,16 @@
+{
+  "name": "Legión Espartana",
+  "short_name": "Legión",
+  "description": "Entrenamiento en casa, retos de 30 días y ranking de la Legión Espartana.",
+  "lang": "es",
+  "start_url": "/inicio",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0c0b",
+  "theme_color": "#0d0c0b",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

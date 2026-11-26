@@ -1,0 +1,40 @@
+<div class="pagina-titulo">
+  <div>
+    <h1>Opciones del menú</h1>
+    <p>Cada opción es también un permiso: su clave se asigna a los roles en Roles y permisos.</p>
+  </div>
+  <button nbButton status="primary" (click)="nueva(null)"><nb-icon icon="plus-outline"></nb-icon>Nueva opción</button>
+</div>
+
+<nb-card [nbSpinner]="cargando">
+  <nb-card-body class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr><th>Título</th><th>Clave (permiso)</th><th>Ruta</th><th>Orden</th><th>Estado</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of filas" [class.inactivo]="!f.opcion.activo">
+          <td [style.padding-left.rem]="0.75 + f.nivel * 1.75">
+            <span class="titulo-opcion" [class.grupo]="f.opcion.hijos?.length || !f.opcion.ruta">
+              <nb-icon [icon]="f.opcion.icono || 'radio-button-off-outline'"></nb-icon>{{ f.opcion.titulo }}
+            </span>
+          </td>
+          <td class="mono">{{ f.opcion.clave }}</td>
+          <td class="mono">{{ f.opcion.ruta || '—' }}</td>
+          <td>{{ f.opcion.orden }}</td>
+          <td>
+            <span class="etiqueta" [class.activo]="f.opcion.activo" [class.inactivo]="!f.opcion.activo">{{ f.opcion.activo ? 'Activa' : 'Inactiva' }}</span>
+            <span *ngIf="f.opcion.sistema" class="etiqueta sistema">Sistema</span>
+          </td>
+          <td class="acciones">
+            <button nbButton ghost size="small" nbTooltip="Agregar opción dentro" (click)="nueva(f.opcion)"><nb-icon icon="plus-square-outline"></nb-icon></button>
+            <button nbButton ghost size="small" nbTooltip="Editar" (click)="editar(f.opcion)"><nb-icon icon="edit-2-outline"></nb-icon></button>
+            <button nbButton ghost size="small" status="danger" nbTooltip="Eliminar" [disabled]="f.opcion.sistema || f.opcion.hijos?.length"
+                    (click)="eliminar(f.opcion)"><nb-icon icon="trash-2-outline"></nb-icon></button>
+          </td>
+        </tr>
+        <tr *ngIf="!cargando && !filas.length"><td colspan="6" class="texto-suave">No hay opciones registradas.</td></tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

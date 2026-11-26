@@ -1,0 +1,33 @@
+<div class="fondo">
+  <nb-card class="tarjeta">
+    <nb-card-body>
+      <div class="marca">
+        <img src="assets/logo.webp" alt="Un espartano jamás se rinde" width="96" height="106">
+        <div>
+          <h1>{{ nombreSistema }}</h1>
+          <p>Ingrese con su cuenta.</p>
+        </div>
+      </div>
+
+      <nb-alert *ngIf="error" status="danger" class="alerta">{{ error }}</nb-alert>
+
+      <form class="formulario" (ngSubmit)="ingresar()" #f="ngForm">
+        <div>
+          <label for="email">Correo electrónico</label>
+          <input nbInput fullWidth id="email" name="email" type="email" autocomplete="username"
+                 [(ngModel)]="email" required autofocus>
+        </div>
+        <div>
+          <label for="clave">Contraseña</label>
+          <input nbInput fullWidth id="clave" name="clave" [type]="verClave ? 'text' : 'password'"
+                 autocomplete="current-password" [(ngModel)]="clave" required>
+          <nb-checkbox class="ver" [(checked)]="verClave" name="verClave">Mostrar contraseña</nb-checkbox>
+        </div>
+        <button nbButton fullWidth status="primary" type="submit" [disabled]="!f.valid || enviando"
+                [nbSpinner]="enviando" nbSpinnerStatus="control">Ingresar</button>
+      </form>
+      <p class="pie">Si olvidó su contraseña, solicite al administrador que la restablezca.</p>
+      <app-instalar-app class="instalar" [anchoCompleto]="true"></app-instalar-app>
+    </nb-card-body>
+  </nb-card>
+</div>

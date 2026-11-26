@@ -1,0 +1,46 @@
+<div class="pagina-titulo">
+  <div>
+    <h1>Usuarios</h1>
+    <p>Personas con acceso al sistema y el rol que determina su menú.</p>
+  </div>
+  <button nbButton status="primary" (click)="nuevo()"><nb-icon icon="person-add-outline"></nb-icon>Nuevo usuario</button>
+</div>
+
+<nb-card [nbSpinner]="cargando">
+  <nb-card-header>
+    <input nbInput fullWidth fieldSize="small" placeholder="Buscar por nombre, correo o rol" [(ngModel)]="filtro">
+  </nb-card-header>
+  <nb-card-body class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Último acceso</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of filtrados" [class.inactivo]="!u.activo">
+          <td>
+            {{ u.nombre }}
+            <span *ngIf="esPropio(u)" class="texto-suave">(usted)</span>
+          </td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.rol?.nombre }}</td>
+          <td>
+            <span class="etiqueta" [class.activo]="u.activo" [class.inactivo]="!u.activo">{{ u.activo ? 'Activo' : 'Inactivo' }}</span>
+            <span *ngIf="u.debeCambiarClave" class="texto-suave" nbTooltip="Debe cambiar su contraseña temporal"> · clave temporal</span>
+          </td>
+          <td>{{ u.ultimoAcceso ? (u.ultimoAcceso | date:'dd/MM/yyyy HH:mm') : 'Nunca' }}</td>
+          <td class="acciones">
+            <button nbButton ghost size="small" nbTooltip="Editar" (click)="editar(u)"><nb-icon icon="edit-2-outline"></nb-icon></button>
+            <button nbButton ghost size="small" nbTooltip="Restablecer contraseña" (click)="restablecer(u)"><nb-icon icon="refresh-outline"></nb-icon></button>
+            <button nbButton ghost size="small" [status]="u.activo ? 'danger' : 'success'" [disabled]="esPropio(u)"
+                    [nbTooltip]="u.activo ? 'Desactivar' : 'Activar'" (click)="alternarEstado(u)">
+              <nb-icon [icon]="u.activo ? 'slash-outline' : 'checkmark-circle-outline'"></nb-icon>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!cargando && !filtrados.length">
+          <td colspan="6" class="texto-suave">No se encontraron usuarios.</td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

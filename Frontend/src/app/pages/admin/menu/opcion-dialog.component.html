@@ -1,0 +1,52 @@
+<nb-card class="dialogo">
+  <nb-card-header>{{ opcion ? 'Editar opción' : 'Nueva opción' }}</nb-card-header>
+  <nb-card-body>
+    <nb-alert *ngIf="error" status="danger">{{ error }}</nb-alert>
+    <nb-alert *ngIf="sistema" status="info">
+      Opción de sistema: solo se pueden cambiar el título, el ícono y el orden.
+    </nb-alert>
+    <form class="formulario" id="form-opcion" (ngSubmit)="guardar()" #f="ngForm">
+      <div>
+        <label for="titulo">Título</label>
+        <input nbInput fullWidth id="titulo" name="titulo" [(ngModel)]="titulo" (ngModelChange)="sugerirClave()" required>
+      </div>
+      <div>
+        <label>Ubicación</label>
+        <nb-select fullWidth name="padre" [(ngModel)]="padre" (selectedChange)="padre = $event; sugerirClave()" [disabled]="sistema">
+          <nb-option value="">Nivel principal</nb-option>
+          <nb-option *ngFor="let p of padresPosibles" [value]="p.opcion._id">{{ sangria(p) }}{{ p.opcion.titulo }}</nb-option>
+        </nb-select>
+      </div>
+      <div>
+        <label for="clave">Clave (permiso)</label>
+        <input nbInput fullWidth id="clave" name="clave" class="mono" [(ngModel)]="clave" (ngModelChange)="claveEditada = true"
+               required pattern="[a-z0-9]+([._-][a-z0-9]+)*" [disabled]="sistema">
+        <div class="ayuda">Minúsculas, números y puntos. Ej.: <span class="mono">reportes.ventas</span>. Es la misma clave que usa el backend en requierePermiso().</div>
+      </div>
+      <div>
+        <label for="ruta">Ruta</label>
+        <input nbInput fullWidth id="ruta" name="ruta" class="mono" [(ngModel)]="ruta" (ngModelChange)="rutaEditada = true" [disabled]="sistema">
+        <div class="ayuda">Ruta de la pantalla en el frontend, ej. <span class="mono">/reportes/ventas</span>. Déjela vacía si es un grupo que solo contiene opciones.</div>
+      </div>
+      <div class="dos">
+        <div>
+          <label for="icono">Ícono (Eva Icons)</label>
+          <div class="vista-icono">
+            <input nbInput fullWidth id="icono" name="icono" class="mono" [(ngModel)]="icono" placeholder="ej. file-text-outline">
+            <nb-icon *ngIf="icono" [icon]="icono"></nb-icon>
+          </div>
+          <div class="ayuda">Catálogo: akveo.github.io/eva-icons</div>
+        </div>
+        <div>
+          <label for="orden">Orden</label>
+          <input nbInput fullWidth id="orden" name="orden" type="number" [(ngModel)]="orden">
+        </div>
+      </div>
+      <nb-toggle name="activo" [(ngModel)]="activo" [disabled]="sistema">Opción activa</nb-toggle>
+    </form>
+  </nb-card-body>
+  <nb-card-footer class="pie">
+    <button nbButton ghost (click)="ref.close(false)">Cancelar</button>
+    <button nbButton status="primary" type="submit" form="form-opcion" [disabled]="!f.valid || guardando">Guardar</button>
+  </nb-card-footer>
+</nb-card>

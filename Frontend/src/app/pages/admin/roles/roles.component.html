@@ -1,0 +1,66 @@
+<div class="pagina-titulo">
+  <div>
+    <h1>Roles y permisos</h1>
+    <p>Cada rol define qué opciones del menú ve el usuario y qué operaciones puede realizar.</p>
+  </div>
+  <button nbButton status="primary" (click)="nuevo()"><nb-icon icon="plus-outline"></nb-icon>Nuevo rol</button>
+</div>
+
+<div class="dos-columnas">
+  <nb-card class="lista" [nbSpinner]="cargando">
+    <nb-card-header>Roles</nb-card-header>
+    <nb-card-body class="sin-relleno">
+      <button *ngFor="let r of roles" type="button" class="rol" [class.elegido]="edicion?._id === r._id" (click)="seleccionar(r)">
+        <span class="nombre">{{ r.nombre }} <span *ngIf="r.sistema" class="etiqueta sistema">Sistema</span></span>
+        <span class="texto-suave">{{ r.usuarios }} usuario(s)</span>
+      </button>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card class="editor" *ngIf="edicion; else sinSeleccion">
+    <nb-card-header>{{ edicion._id ? 'Editar rol' : 'Nuevo rol' }}</nb-card-header>
+    <nb-card-body>
+      <div class="formulario">
+        <div>
+          <label for="nombre-rol">Nombre</label>
+          <input nbInput fullWidth id="nombre-rol" [(ngModel)]="edicion.nombre" [disabled]="edicion.sistema" required>
+        </div>
+        <div>
+          <label for="desc-rol">Descripción</label>
+          <input nbInput fullWidth id="desc-rol" [(ngModel)]="edicion.descripcion">
+        </div>
+        <div>
+          <label>Permisos</label>
+          <nb-alert *ngIf="accesoTotal" status="info" class="alerta">
+            Este rol tiene acceso total: ve todas las opciones, incluidas las que se creen en el futuro.
+          </nb-alert>
+          <ul class="arbol" *ngIf="!accesoTotal">
+            <ng-container *ngTemplateOutlet="nodos; context: { $implicit: opciones }"></ng-container>
+          </ul>
+          <div class="ayuda" *ngIf="!accesoTotal">Marcar un grupo marca todas sus opciones.</div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer class="pie">
+      <button nbButton ghost status="danger" *ngIf="edicion._id && !edicion.sistema" (click)="eliminar()">Eliminar</button>
+      <span class="espacio"></span>
+      <button nbButton status="primary" (click)="guardar()" [disabled]="!edicion.nombre.trim() || guardando">Guardar</button>
+    </nb-card-footer>
+  </nb-card>
+</div>
+
+<ng-template #sinSeleccion>
+  <nb-card class="editor"><nb-card-body class="texto-suave">Seleccione un rol o cree uno nuevo.</nb-card-body></nb-card>
+</ng-template>
+
+<ng-template #nodos let-lista>
+  <li *ngFor="let o of lista">
+    <nb-checkbox [checked]="marcado(o)" [indeterminate]="parcial(o)" (checkedChange)="alternar(o, $event)">
+      <nb-icon *ngIf="o.icono" [icon]="o.icono" class="icono"></nb-icon>{{ o.titulo }}
+      <span class="clave mono">{{ o.clave }}</span>
+    </nb-checkbox>
+    <ul *ngIf="o.hijos?.length">
+      <ng-container *ngTemplateOutlet="nodos; context: { $implicit: o.hijos }"></ng-container>
+    </ul>
+  </li>
+</ng-template>
